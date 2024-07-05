@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if zenity --question --text="Are you sure you want to shut down the device?"; then
+    systemctl poweroff
+fi

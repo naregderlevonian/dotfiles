@@ -1,0 +1,13 @@
+#!/bin/bash
+
+STATUS=$(echo "$(hyprctl -j monitors)" | jq '.[] | select(.name == "DP-1").disabled')
+STORAGE=$HOME/.config/hypr/etc/screenpad.conf
+
+if [ "$STATUS" == "false" ]; then
+    MESSAGE="monitor = DP-1, disable"
+else
+    MESSAGE="monitor = DP-1, 2880x864@120, 0x900, 2, bitdepth, 10"
+fi
+
+echo "$MESSAGE" > $STORAGE
+notify-send "Screenpad $(if [ "$STATUS" == "false" ]; then echo "Off"; else echo "On"; fi)"

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if zenity --question --text="Are you sure you want to restart the window manager?"; then
+    hyprctl dispatch exit
+fi

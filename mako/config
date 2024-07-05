@@ -1,0 +1,14 @@
+sort=-time
+layer=top
+background-color=#080808
+width=320
+height=160
+border-size=1
+border-color=#484848
+border-radius=16
+padding=32
+icons=0
+max-icon-size=32
+default-timeout=500
+ignore-timeout=1
+font=Ubuntu Mono 12

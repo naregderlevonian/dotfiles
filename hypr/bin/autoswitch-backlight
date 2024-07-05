@@ -1,0 +1,45 @@
+#!/bin/bash
+
+INTEL_STORAGE=$HOME/.config/hypr/etc/backlight/intel.last
+SCREENPAD_STORAGE=$HOME/.config/hypr/etc/backlight/screenpad.last
+KEYBOARD_STORAGE=$HOME/.config/hypr/etc/backlight/keyboard.last
+
+function save() {
+    echo $(brightnessctl --device=intel_backlight get) > $INTEL_STORAGE
+    echo $(brightnessctl --device=asus_screenpad get) > $SCREENPAD_STORAGE
+    echo $(brightnessctl --device=asus::kbd_backlight get) > $KEYBOARD_STORAGE
+}
+
+function decrease() {
+    brightnessctl --device=intel_backlight set 10
+    brightnessctl --device=asus_screenpad set 5
+    brightnessctl --device=asus::kbd_backlight set 1
+}
+
+function reset() {
+    brightnessctl --device=intel_backlight set 0
+    brightnessctl --device=asus_screenpad set 0
+    brightnessctl --device=asus::kbd_backlight set 0
+}
+
+function restore() {
+    cat $INTEL_STORAGE
+    brightnessctl --device=intel_backlight set $(cat $INTEL_STORAGE)
+    brightnessctl --device=asus_screenpad set $(cat $SCREENPAD_STORAGE)
+    brightnessctl --device=asus::kbd_backlight set $(cat $KEYBOARD_STORAGE)
+}
+
+case "$1" in
+"decrease")
+    save; decrease
+    ;;
+"reset")
+    reset
+    ;;
+"restore")
+    restore
+    ;;
+*)
+    echo "Invalid argument. Please provide 'switch decrease', 'switch reset', or 'switch restore'."
+    ;;
+esac

@@ -1,0 +1,11 @@
+#!/bin/bash
+SCREENSHOT_PATH="$HOME/Pictures/Screenshots/$(date +'%s.png')"
+
+if [ "$1" = "screen" ]; then
+    grim "$SCREENSHOT_PATH"
+else
+    grim -g "$(slurp -o)" "$SCREENSHOT_PATH"
+fi
+
+play "$HOME/.config/hypr/share/sounds/camera-shutter.ogg"
+notify-send "Screenshot Saved"

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+STORAGE="$HOME/.config/hypr/etc/touchpad-enabled.conf"
+TOUCHPAD_ENABLED="touchpad_enabled"
+
+STATE=$(cat "$STORAGE")
+NEW_STATE="false"
+NOTIFICATION="Touchpad Off"
+
+[ "$STATE" != "true" ] && NEW_STATE="true" && NOTIFICATION="Touchpad On"
+
+hyprctl keyword "\$TOUCHPAD_ENABLED" "$NEW_STATE" -r
+echo "$NEW_STATE" > "$STORAGE"
+notify-send "$NOTIFICATION"
