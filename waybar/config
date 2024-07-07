@@ -43,27 +43,27 @@
     },
     "custom/lock": {
         "format": "",
-        "on-double-click": "hyprlock",
+        "on-click": "hyprlock",
         "tooltip-format": "Lock",
     },
     "custom/sleep": {
         "format": "",
-        "on-double-click": "systemctl suspend",
+        "on-click": "systemctl suspend",
         "tooltip-format": "Suspend",
     },    
     "custom/exit": {
         "format": "",
-        "on-double-click": "$HOME/.config/waybar/bin/restart",
+        "on-click": "$HOME/.config/waybar/bin/restart",
         "tooltip-format": "Exit",
     },
     "custom/reboot": {
         "format": "",
-        "on-double-click": "$HOME/.config/waybar/bin/reboot",
+        "on-click": "$HOME/.config/waybar/bin/reboot",
         "tooltip-format": "Reboot",
     },
     "custom/poweroff": {
         "format": "", 
-        "on-double-click": "$HOME/.config/waybar/bin/poweroff",
+        "on-click": "$HOME/.config/waybar/bin/poweroff",
         "tooltip-format": "Power Off",
     }
     
