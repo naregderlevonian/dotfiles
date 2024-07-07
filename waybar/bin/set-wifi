@@ -1,0 +1,11 @@
+#!/bin/sh
+
+WIFI_ENABLED=$(iwctl device wlan0 show | grep 'Powered' | awk '{print $4}')
+
+if [ $WIFI_ENABLED == 'on' ]; then
+    notify-send 'WiFi Off'
+    iwctl device wlan0 set-property Powered off
+else
+    notify-send 'WiFi On'
+    iwctl device wlan0 set-property Powered on
+fi
