@@ -1,7 +1,15 @@
 #!/bin/sh
 
-CURRENT_FAN=/sys/devices/platform/asus-nb-wmi/hwmon/hwmon6/pwm1_enable
-CURRENT_FAN_VALUE=$(cat $CURRENT_FAN)
+CURRENT_FAN=
+CURRENT_FAN_VALUE=
+
+for hwmon_dir in /sys/devices/platform/asus-nb-wmi/hwmon/hwmon*/; do
+    if [ -f "${hwmon_dir}pwm1_enable" ]; then
+        CURRENT_FAN="${hwmon_dir}pwm1_enable"
+        CURRENT_FAN_VALUE=$(cat $CURRENT_FAN)
+        break
+    fi
+done
 
 function switch_fan() {
     if echo $1 | sudo tee $CURRENT_FAN > /dev/null; then
