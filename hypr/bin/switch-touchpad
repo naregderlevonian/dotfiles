@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 STORAGE="$HOME/.config/hypr/etc/touchpad-enabled.conf"
 TOUCHPAD_ENABLED="touchpad_enabled"

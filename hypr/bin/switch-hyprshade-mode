@@ -1,0 +1,36 @@
+#!/bin/sh
+
+CURRENT_MODE=$(hyprshade current)
+
+if [ "$1" = "back" ]; then
+    case $CURRENT_MODE in
+        "vibrance")
+            hyprshade on blue-light-filter
+            notify-send "Screenshade Bluelight Filter"
+            ;;
+        "blue-light-filter")
+            hyprshade off
+            notify-send "Screenshade Off"
+            ;;
+        *)
+            hyprshade on vibrance
+            notify-send "Screenshade Vibrance"
+            ;;
+    esac
+else
+    case $CURRENT_MODE in
+        "vibrance")
+            hyprshade off
+            notify-send "Screenshade Off"
+            ;;
+        "blue-light-filter")
+            hyprshade on vibrance
+            notify-send "Screenshade Vibrance"
+            ;;
+        *)
+            hyprshade on blue-light-filter
+            notify-send "Screenshade Bluelight Filter"
+            ;;
+    esac
+fi
+

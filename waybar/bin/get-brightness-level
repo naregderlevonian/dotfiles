@@ -1,0 +1,3 @@
+#!/bin/sh
+
+brightnessctl --device=$1 | grep Current | sed -e 's/.*[^0-9]\([0-9]\+\)[^0-9]*$/\1/'

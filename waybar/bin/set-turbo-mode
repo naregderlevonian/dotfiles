@@ -1,0 +1,20 @@
+#!/bin/sh
+
+CURRENT_BOOST=/sys/devices/system/cpu/intel_pstate/no_turbo
+CURRENT_BOOST_VALUE=$(cat $CURRENT_BOOST)
+
+function switch_turbo() {
+    if echo $1 | sudo tee $CURRENT_BOOST > /dev/null; then
+        if [ $1 = '0' ]; then
+            notify-send 'Turno On'
+        else
+            notify-send 'Turbo Off'
+        fi
+    fi
+}
+
+if [ $CURRENT_BOOST_VALUE = '0' ]; then
+    switch_turbo 1
+else 
+    switch_turbo 0
+fi

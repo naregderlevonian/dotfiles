@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 STATUS=$(echo "$(hyprctl -j monitors)" | jq '.[] | select(.name == "DP-1").disabled')
 STORAGE=$HOME/.config/hypr/etc/screenpad.conf

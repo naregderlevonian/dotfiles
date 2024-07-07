@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 SCREENSHOT_PATH="$HOME/Pictures/Screenshots/$(date +'%s.png')"
 
 if [ "$1" = "screen" ]; then

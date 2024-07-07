@@ -1,0 +1,10 @@
+#!/bin/sh
+
+CURRENT_FAN=/sys/devices/platform/asus-nb-wmi/hwmon/hwmon6/pwm1_enable
+CURRENT_FAN_VALUE=$(cat $CURRENT_FAN)
+
+if [ $CURRENT_FAN_VALUE = '0' ]; then
+    echo 'Maximum'
+else
+    echo 'Auto'
+fi

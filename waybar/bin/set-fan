@@ -1,0 +1,20 @@
+#!/bin/sh
+
+CURRENT_FAN=/sys/devices/platform/asus-nb-wmi/hwmon/hwmon6/pwm1_enable
+CURRENT_FAN_VALUE=$(cat $CURRENT_FAN)
+
+function switch_fan() {
+    if echo $1 | sudo tee $CURRENT_FAN > /dev/null; then
+        if [ $1 = '2' ]; then
+            notify-send 'Fan Mode' 'Auto'
+        else
+            notify-send 'Fan Mode' 'Maximum'
+        fi
+    fi
+}
+
+if [ $CURRENT_FAN_VALUE = '2' ]; then
+    switch_fan 0
+else 
+    switch_fan 2
+fi

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 INTEL_STORAGE=$HOME/.config/hypr/etc/backlight/intel.last
 SCREENPAD_STORAGE=$HOME/.config/hypr/etc/backlight/screenpad.last

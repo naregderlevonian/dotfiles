@@ -1,0 +1,26 @@
+#!/bin/sh
+
+CURRENT_GOVERNOR=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor | sed 's/\b\(.\)/\u\1/g')
+
+function switch_power_mode() {
+    powerprofilesctl set $1
+}
+
+if [ $CURRENT_GOVERNOR = 'Powersave' ]; then
+    case $(powerprofilesctl get) in
+        balanced)
+            switch_power_mode 'performance' 'Performance'
+            notify-send 'Power Mode' 'Performance'
+            ;;
+        performance)
+            switch_power_mode 'power-saver' 'Power Saver'
+            notify-send 'Power Mode' 'Power Saver'
+            ;;
+        *)
+            switch_power_mode 'balanced' 'Balanced'
+            notify-send 'Power Mode' 'Balanced'
+            ;;
+    esac
+else
+    notify-send 'Governor Mode' 'Performance'
+fi

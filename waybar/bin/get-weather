@@ -1,0 +1,5 @@
+#!/bin/sh
+CURRENT_LOCATION=$(curl -s ipinfo.io/city)
+TEMPERATURE=$(weather-Cli get $CURRENT_LOCATION | grep Temperature | sed 's/\s*Temperature: //g')
+echo $CURRENT_LOCATION $TEMPERATURE
+

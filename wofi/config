@@ -1,0 +1,8 @@
+allow_images=false
+no_actions=true
+hide_scroll=true
+normal_window=true
+lines=8
+mode=drun
+sort_order=alphabetical
+--show

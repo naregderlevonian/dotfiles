@@ -1,0 +1,5 @@
+#!/bin/sh
+
+CURRENT_GOVERNOR=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+
+powerprofilesctl get | sed -e 's/\b\(.\)/\u\1/g'

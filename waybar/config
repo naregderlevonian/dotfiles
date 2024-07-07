@@ -1,0 +1,243 @@
+[{
+    "output": ["eDP-1"],
+    "layer": "top",
+    "position": "top",
+    "spacing": 24,
+    "margin-top": 24,
+    "modules-left": [
+        "battery",
+        "clock",
+        "custom/weather"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "custom/lock",
+        "custom/sleep",
+        "custom/exit",
+        "custom/reboot",
+        "custom/poweroff"
+    ],
+    "battery": {
+        "interval": 1,
+        "states": {
+            "warning": 32,
+            "critical": 16,
+        },
+        "format": " {capacity}%",
+        "format-discharging": " {capacity}% Discharging",
+        "format-charging": " {capacity}% Charging",
+        "tooltip-format": "{time} left, {power} W",
+    },
+    "clock": {
+        "format": "{:%d.%m.%Y %H:%M:%S}",
+        "interval": 1,
+    },
+    "custom/weather": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/bin/get-weather",
+        "interval": 1000,
+        "on-click": "kitty --hold -e weather-Cli get Moscow",
+        "tooltip-format": "{}",
+    },
+    "custom/lock": {
+        "format": "",
+        "on-double-click": "hyprlock",
+        "tooltip-format": "Lock",
+    },
+    "custom/sleep": {
+        "format": "",
+        "on-double-click": "systemctl suspend",
+        "tooltip-format": "Suspend",
+    },    
+    "custom/exit": {
+        "format": "",
+        "on-double-click": "$HOME/.config/waybar/bin/restart",
+        "tooltip-format": "Exit",
+    },
+    "custom/reboot": {
+        "format": "",
+        "on-double-click": "$HOME/.config/waybar/bin/reboot",
+        "tooltip-format": "Reboot",
+    },
+    "custom/poweroff": {
+        "format": "", 
+        "on-double-click": "$HOME/.config/waybar/bin/poweroff",
+        "tooltip-format": "Power Off",
+    }
+    
+},
+{
+    "output": ["DP-1"],
+    "layer": "top",
+    "position": "bottom",
+    "spacing": 24,
+    "margin-bottom": 24,
+    "modules-left": [
+        "custom/backlight1",
+        "custom/backlight2",
+        "custom/backlight3",
+        "pulseaudio",
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [	
+        "custom/optimus",
+        "custom/fan",
+        "custom/turbo",
+        "custom/governor",		
+        "custom/powerprofilectl"
+    ],
+    "custom/backlight1": {
+        "format": " Display {} %",
+        "on-scroll-down": "brightnessctl s +1",
+        "on-scroll-up": "brightnessctl s 1-", 
+        "tooltip": true,
+        "tooltip-format": "Display Brightness: {} %",
+        "exec": "$HOME/.config/waybar/bin/get-brightness-level intel_backlight",
+        "interval": 1
+    },
+    "custom/backlight2": {
+        "format": " Screenpad {} %",
+        "on-scroll-down": "brightnessctl --device=asus_screenpad s +1",
+        "on-scroll-up": "brightnessctl --device=asus_screenpad s 1-", 
+        "tooltip": true,
+        "tooltip-format": "Screenpad Brightness: {} %",
+        "exec": "$HOME/.config/waybar/bin/get-brightness-level asus_screenpad",
+        "interval": 1
+    },
+    "custom/backlight3": {
+        "format": " Keyboard {} %",
+        "on-scroll-down": "brightnessctl --device=asus::kbd_backlight s +1",
+        "on-scroll-up": "brightnessctl --device=asus::kbd_backlight s 1-", 
+        "tooltip": true,
+        "tooltip-format": "Keyboard Brightness: {} %",
+        "exec": "$HOME/.config/waybar/bin/get-brightness-level asus::kbd_backlight",
+        "interval": 1,
+        "smooth-scrolling-threshold": 4
+    },
+    "pulseaudio": {
+        "format": " Volume {volume} %",
+        "format-bluetooth": " Volume {volume} %",
+        "format-muted": " Volume Muted",
+        "format-source": " Source {volume} %",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-",
+        "on-click": "alsamixer",
+        "on-click-double": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "qpwgraph",
+        "on-click-middle": "pavucontrol",
+    },
+    "custom/optimus": {
+        "format": "{} ",
+        "on-click": "$HOME/.config/waybar/bin/set-gpu-mode",
+        "tooltip": false,
+        "exec": "cat ~/.config/waybar/etc/current-gpu-mode.conf",
+        "interval": 1,
+    },
+    "custom/fan": {
+        "format": "{} ",
+        "on-click": "$HOME/.config/waybar/bin/set-fan",
+        "tooltip": false,
+        "exec": "$HOME/.config/waybar/bin/get-fan",
+        "interval": 1,
+    },
+    "custom/turbo": {
+        "format": "{} ",
+        "on-click": "$HOME/.config/waybar/bin/set-turbo-mode",
+        "tooltip": false,
+        "exec": "$HOME/.config/waybar/bin/get-turbo",
+        "interval": 1,
+    },
+    "custom/governor": {
+        "format": "{} ",
+        "on-click": "$HOME/.config/waybar/bin/set-governor-mode",
+        "tooltip": false,
+        "exec": "$HOME/.config/waybar/bin/get-governor-mode",
+        "interval": 1,
+    },
+    "custom/powerprofilectl": {
+        "format": "{} ",
+        "on-click": "$HOME/.config/waybar/bin/set-power-mode",
+        "tooltip": false,
+        "exec": "$HOME/.config/waybar/bin/get-power-mode",
+        "interval": 1,
+    },
+},
+{
+    "output": ["DP-1"],
+    "layer": "top",
+    "position": "bottom",
+    "spacing": 24,
+    "margin-bottom": 16,
+    "modules-left": [
+        "bluetooth",
+        "network",
+    ],
+    "modules-center": [
+    ],
+    "modules-right": [
+        "custom/gputemperature",
+        "temperature",
+        "cpu",		
+        "memory",
+    ],
+    "bluetooth": {
+        "format": " Bluetooth",
+        "format-on": " Bluetooth On",
+        "format-off": " Bluetooth Off",
+        "format-disabled": " Bluetooth Disabled",
+        "format-connected": " Bluetooth Connected",
+        "on-click": "kitty -e bluetoothctl",
+        "interval": 2,
+        "tooltip-format": "{}",
+    },
+    "network": {
+        "family": "ipv6",
+        "format-wifi": " {essid} {signalStrength}% {bandwidthUpBits}  {bandwidthDownBits}  ",
+        "format-ethernet": " {}",
+        "format-disconnected": " Disconnected",
+        "on-click": "kitty -e iwctl",
+        "interval": 1,
+        "tooltip": false,
+    },
+    "custom/gputemperature": {
+        "format": "GPU {}°C ",
+        "interval": 1,  
+        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader",
+    },
+    "temperature": {
+        "critical-threshold": 92,
+        "format": "CPU {}°C ",
+        "interval": 1,  
+    },
+    "cpu": {
+        "format": "CPU {}% ",
+        "states": {
+            "warning": 64,
+            "critical": 92
+        },
+        "interval": 1,
+    },
+    "memory": {
+        "format": "RAM {}%, {used:0.1f} Gb ",
+        "states": {
+            "warning": 64,
+            "critical": 92
+        },
+        "tooltip": "Memory: {used:0.1f} {}%",
+        "interval": 1,
+    },
+}]
