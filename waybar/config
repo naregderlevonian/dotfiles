@@ -78,7 +78,7 @@
         "custom/backlight1",
         "custom/backlight2",
         "custom/backlight3",
-        "pulseaudio",
+        "custom/audio",
     ],
     "modules-center": [
         "hyprland/workspaces"
@@ -118,25 +118,15 @@
         "interval": 1,
         "smooth-scrolling-threshold": 4
     },
-    "pulseaudio": {
-        "format": " Volume {volume} %",
-        "format-bluetooth": " Volume {volume} %",
-        "format-muted": " Volume Muted",
-        "format-source": " Source {volume} %",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", ""]
-        },
-        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+",
+    "custom/audio": {
+    	"format": "{}",
+    	"tooltip": false,
+    	"exec": "$HOME/.config/waybar/bin/get-audio",
+    	"interval": 1,
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+ -l 1",
         "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-",
-        "on-click": "alsamixer",
-        "on-click-double": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-double": "",
         "on-click-right": "qpwgraph",
         "on-click-middle": "pavucontrol",
     },

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Получение списка всех активных звуковых устройств (синков)
+sinks=$(pactl list short sinks | awk '{print $1}')
+
+# Если нет активных звуковых устройств
+if [ -z "$sinks" ]; then
+  echo " No Sound"
+  exit 0
+fi
+
+no_sound=true
+for sink in $sinks; do
+  # Получение описания устройства
+  sink_description=$(pactl list sinks | grep -A 20 "^Sink #$sink" | grep "Description" | cut -d ':' -f2 | sed 's/^ *//g')
+
+  # Получение статуса заглушения и громкости для каждого устройства
+  mute_status=$(pactl get-sink-mute "$sink" | awk '{print $2}')
+  volume_level=$(pactl get-sink-volume "$sink" | grep -oP '\d+%' | head -1 | tr -d '%')
+
+  if [ "$mute_status" == "yes" ]; then
+    echo " $sink_description Muted"
+  else
+    no_sound=false
+    if [ "$volume_level" -eq 0 ]; then
+      icon=""
+    elif [ "$volume_level" -le 50 ]; then
+      icon=""
+    else
+      icon=""
+    fi
+    echo "$icon $sink_description $volume_level%"
+  fi
+done
+
+if $no_sound; then
+  echo "No Sound"
+fi

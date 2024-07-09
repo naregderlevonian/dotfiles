@@ -6,7 +6,7 @@ STORAGE=$HOME/.config/hypr/etc/screenpad.conf
 if [ "$STATUS" == "false" ]; then
     MESSAGE="monitor = DP-1, disable"
 else
-    MESSAGE="monitor = DP-1, 2880x864@120, 0x900, 2, bitdepth, 10"
+    MESSAGE="monitor = DP-1, 2880x864@120, 0x1200, 1.5, bitdepth, 10"
 fi
 
 echo "$MESSAGE" > $STORAGE

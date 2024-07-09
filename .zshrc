@@ -15,7 +15,7 @@ eval $(dircolors ~/.dir_colors)
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-PROMPT='%{$FG[015]%}%n %{$FG[012]%}%1~%{$FG[015]%} # %{$reset_color%}'
+PROMPT='%{$FG[015]%}%n %{$FG[012]%}%1~%{$FG[015]%} $ %{$reset_color%}'
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -190,3 +190,5 @@ if [ $(tty) = /dev/tty1 ]; then
     Hyprland > /dev/null
     logout
 fi
+
+echo -e 'power off\nquit' | bluetoothctl
