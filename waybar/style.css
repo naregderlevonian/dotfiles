@@ -27,26 +27,16 @@ tooltip label {
     color: #ffffff;
 }
 
-#battery {	
-    margin-left: 28px;
-}
-
-#custom-backlight1 {
-    margin-left: 28px;
-}
-
-#custom-poweroff {
-    margin-right: 28px;
-}
-
+#battery,
+#custom-audio,
+#custom-backlight1,
 #bluetooth {
     margin-left: 28px;
 }
 
-#memory {
-    margin-right: 28px;
-}
-
+#custom-poweroff,
+#custom-mic,
+#memory,
 #custom-powerprofilectl {
     margin-right: 28px;
 }
@@ -95,7 +85,7 @@ tooltip label {
 }
 
 #workspaces {
-    background-color: transparent;
+    background: transparent;
     color: #ffffff;
 }
 	
