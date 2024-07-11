@@ -17,7 +17,7 @@ if [ -z "$INFORMATION" ]; then
 fi
 
 if [ "$DESCRIPTION" = "Dummy Output" ]; then
-    echo " No audio"
+    echo " No Output"
     exit 0
 fi
 

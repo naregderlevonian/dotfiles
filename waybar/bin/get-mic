@@ -18,8 +18,8 @@ if [ -z "$INFORMATION" ]; then
     exit 0
 fi
 
-if [ "$DESCRIPTION" = "Dummy Output" ]; then
-    echo "No audio "
+if [ "$DESCRIPTION" = "Monitor of Dummy Output" ]; then
+    echo "No Input "
     exit 0
 fi
 
