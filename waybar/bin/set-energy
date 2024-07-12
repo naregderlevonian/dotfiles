@@ -1,0 +1,50 @@
+#!/bin/sh
+
+MASK=/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference
+CURRENT_ENERGY=/sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference
+CURRENT_ENERGY_VALUE=$(<"$CURRENT_ENERGY")
+CURRENT_GOVERNOR_VALUE=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+
+if [[ $CURRENT_GOVERNOR_VALUE == "performance" ]]; then
+    notify-send "Energy Mode" "Only Performance available"
+    exit 0
+fi
+
+set_energy_mode() {
+    notify-send "Energy Mode" "$2"
+    for FILE in $MASK; do
+        echo "$1" | sudo tee "$FILE" > /dev/null
+    done
+}
+
+next_mode() {
+    case $1 in
+        performance) echo "power";;
+        balance_performance) echo "performance";;
+        balance_power) echo "balance_performance";;
+        power) echo "balance_power";;
+    esac
+}
+
+previous_mode() {
+    case $1 in
+        performance) echo "balance_performance";;
+        balance_performance) echo "balance_power";;
+        balance_power) echo "power";;
+        power) echo "performance";;
+    esac
+}
+
+if [[ $1 == "next" ]]; then
+    MODE=$(next_mode "$CURRENT_ENERGY_VALUE")
+else
+    MODE=$(previous_mode "$CURRENT_ENERGY_VALUE")
+fi
+
+case $MODE in
+    performance) set_energy_mode performance "Performance";;
+    balance_performance) set_energy_mode balance_performance "Balance Performance";;
+    balance_power) set_energy_mode balance_power "Balance Power";;
+    power) set_energy_mode power "Power";;
+esac
+

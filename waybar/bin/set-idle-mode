@@ -1,0 +1,14 @@
+#!/bin/sh
+
+is_process_running() {
+    pgrep "$1" > /dev/null 2>&1
+    return $?
+}
+
+PROCESS_NAME="hypridle"
+
+if is_process_running "$PROCESS_NAME"; then
+    pkill "$PROCESS_NAME"
+else
+    "$PROCESS_NAME" &
+fi

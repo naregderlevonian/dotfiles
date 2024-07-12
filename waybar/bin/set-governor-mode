@@ -1,22 +1,19 @@
 #!/bin/sh
 
+MASK=/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 CURRENT_GOVERNOR=/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 CURRENT_GOVERNOR_VALUE=$(cat $CURRENT_GOVERNOR)
 
-function switch_governor() {
-    if [ $1 = 'powersave' ]; then
-        echo $1 | sudo tee $CURRENT_GOVERNOR > /dev/null
-        powerprofilesctl set power-saver
-        notify-send 'Governor Mode' 'Powersave'
-    else
-        powerprofilesctl set performance
-        echo $1 | sudo tee $CURRENT_GOVERNOR > /dev/null
-        notify-send 'Governor Mode' 'Performance'
-    fi
+set_governor() {
+    notify-send "Governor Mode" "$2"
+    for FILE in $MASK; do
+        echo $1 | sudo tee "$FILE"  
+    done
 }
 
-if [ $CURRENT_GOVERNOR_VALUE = 'powersave' ]; then
-    switch_governor performance
+if [ $CURRENT_GOVERNOR_VALUE = "powersave" ]; then
+    set_governor "performance" "Performance" 
 else 
-    switch_governor powersave
+    set_governor "powersave" "Powersave"
 fi
+

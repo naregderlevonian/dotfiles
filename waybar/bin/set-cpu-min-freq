@@ -1,0 +1,30 @@
+#!/bin/sh
+
+MIN_MASK=/sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq
+
+CURRENT_MIN_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq)
+AVAILABLE_MAX_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq)
+AVAILABLE_MIN_FREQ=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq)
+
+OPERATION=$1
+STEP=$2
+
+if [ "$OPERATION" = "--increment" ]; then
+    NEW_MIN_FREQ=$((CURRENT_MIN_FREQ + STEP))
+    if [ "$NEW_MIN_FREQ" -ge 5000000 ]; then
+        exit 0
+    fi
+elif [ "$OPERATION" = "--decrement" ]; then
+    NEW_MIN_FREQ=$((CURRENT_MIN_FREQ - STEP))
+fi
+
+case $OPERATION in
+    "--increment") NEW_MIN_FREQ=$((CURRENT_MIN_FREQ + STEP));;
+    "--decrement") NEW_MIN_FREQ=$((CURRENT_MIN_FREQ - STEP));;
+    "--minimum") NEW_MIN_FREQ=400000;;
+    "--maximum") NEW_MIN_FREQ=2400000;;
+esac
+
+for FILE in $MIN_MASK; do  
+    echo "$NEW_MIN_FREQ" | sudo tee "$FILE" > /dev/null
+done

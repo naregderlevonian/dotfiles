@@ -12,7 +12,7 @@ for hwmon_dir in /sys/devices/platform/asus-nb-wmi/hwmon/hwmon*/; do
 done
 
 if [ $CURRENT_FAN_VALUE = '0' ]; then
-    echo 'Maximum'
+    echo 'Aeration '
 else
-    echo 'Auto'
+    echo 'Auto '
 fi

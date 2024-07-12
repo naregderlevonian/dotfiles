@@ -1,3 +1,9 @@
 #!/bin/sh
 
-cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor | sed 's/\b\(.\)/\u\1/g'
+CURRENT_GOVERNOR=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor)
+
+if [ "$CURRENT_GOVERNOR" == "powersave" ]; then
+    echo "Standard"
+else
+    echo "Performance"
+fi

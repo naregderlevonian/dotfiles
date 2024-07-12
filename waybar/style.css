@@ -37,8 +37,13 @@ tooltip label {
 #custom-poweroff,
 #custom-mic,
 #memory,
-#custom-powerprofilectl {
+#custom-governor {
     margin-right: 28px;
+}
+
+#custom-energy {
+    margin-right: 0px;
+    margin-left: 0;
 }
 
 #bluetooth.disabled

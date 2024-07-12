@@ -3,8 +3,8 @@
 CURRENT_BOOST=/sys/devices/system/cpu/intel_pstate/no_turbo
 CURRENT_BOOST_VALUE=$(cat $CURRENT_BOOST)
 
-if [ $CURRENT_BOOST_VALUE = '0' ]; then
-    echo 'Turbo'
+if [ $CURRENT_BOOST_VALUE = "0" ]; then
+    echo "Turbo Boost "
 else
-    echo 'No Turbo'
-fi
+    echo "Turbo Off "
+fi  

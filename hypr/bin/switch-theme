@@ -1,0 +1,15 @@
+#!/bin/sh
+
+MODE=~/.config/hypr/hyprland/mode.conf
+
+if [ -s $MODE ]; then
+    notify-send "Theme Off"
+    > $MODE
+    pkill hyprpaper
+    hyprctl reload
+else
+    notify-send "Theme On"
+    echo "source = ~/.config/hypr/hyprland/modes/custom.conf" > $MODE
+    hyprpaper
+    hyprctl reload
+fi
