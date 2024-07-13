@@ -1,0 +1,11 @@
+[Unit]
+Description=Power Mode Listener
+
+[Service]
+ExecStart=/usr/local/bin/power-mode-listener
+Restart=no
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
