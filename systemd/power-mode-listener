@@ -16,18 +16,18 @@ set_energy_mode() {
     done
 }
 
-set_boost() {
+disable_boost() {
     echo "$1" | sudo tee "$CURRENT_BOOST" > /dev/null
 }
 
 switch_governor() {
     if [ "$1" == "powersave" ]; then
-        set_boost 0
+        disable_boost 1
         set_governor "powersave"
         set_energy_mode "power"
         hypridle &
     else
-        set_boost 1
+        disable_boost 0
         set_governor "performance"
         set_energy_mode "performance"
     fi

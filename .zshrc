@@ -191,4 +191,3 @@ if [ $(tty) = /dev/tty1 ]; then
     logout
 fi
 
-echo -e 'power off\nquit' | bluetoothctl
