@@ -1,0 +1,17 @@
+#!/bin/bash
+
+BLUETOOTH_ENABLED=$(bluetoothctl show | grep 'Powered' | awk '{print $2}')
+
+if [ "$BLUETOOTH_ENABLED" == 'yes' ]; then
+    notify-send 'Bluetooth Off'
+    if ! echo -e 'power off\nquit' | bluetoothctl; then
+        echo "Failed to turn Bluetooth off"
+        exit 1
+    fi
+else
+    notify-send 'Bluetooth On'
+    if ! echo -e 'power on\nquit' | bluetoothctl; then
+        echo "Failed to turn Bluetooth on"
+        exit 1
+    fi
+fi
