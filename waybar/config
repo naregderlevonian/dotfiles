@@ -26,7 +26,7 @@
             "warning": 32,
             "critical": 16,
         },
-        "format": " {capacity}%",
+        "format": " {capacity}% {time} left, {power} W",
         "format-discharging": " {capacity}% Discharging",
         "format-charging": " {capacity}% Charging",
         "tooltip-format": "{time} left, {power} W",

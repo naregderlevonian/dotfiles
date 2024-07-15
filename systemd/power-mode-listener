@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CURRENT_GOVERNOR="/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+CURRENT_MIN_FREQ="/sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq"
 CURRENT_ENERGY="/sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference"
 CURRENT_BOOST="/sys/devices/system/cpu/intel_pstate/no_turbo"
 
@@ -8,6 +9,18 @@ set_governor() {
     for FILE in $CURRENT_GOVERNOR; do
         echo "$1" | sudo tee "$FILE" > /dev/null
     done
+}
+
+set_cpu_min_freq() {
+    if [ "$1" == "min" ]; then
+        for FILE in $CURRENT_MIN_FREQ; do
+            echo "400000" | sudo tee "$FILE" > /dev/null
+        done
+    else
+        for FILE in $CURRENT_MIN_FREQ; do
+            echo "2400000" | sudo tee "$FILE" > /dev/null
+        done
+    fi
 }
 
 set_energy_mode() {
@@ -25,11 +38,15 @@ switch_governor() {
         disable_boost 1
         set_governor "powersave"
         set_energy_mode "power"
-        hypridle &
+        set_cpu_min_freq "min"
+        if [ $(pgrep hypridle) == "" ]; then
+            hypridle &
+        fi
     else
         disable_boost 0
         set_governor "performance"
         set_energy_mode "performance"
+        set_cpu_min_freq "max"
     fi
 }
 
