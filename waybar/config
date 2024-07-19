@@ -2,8 +2,8 @@
     "output": ["eDP-1"],
     "layer": "top",
     "position": "top",
-    "spacing": 24,
-    "margin-top": 24,
+    "spacing": 16,
+    "margin-top": 12,
     "modules-left": [
         "battery",
         "clock",
@@ -91,8 +91,8 @@
     "output": ["DP-1"],
     "layer": "top",
     "position": "bottom",
-    "spacing": 24,
-    "margin-bottom": 24,
+    "spacing": 16,
+    "margin-bottom": 12,
     "modules-left": [
         "custom/backlight1",
         "custom/backlight2",
@@ -202,8 +202,8 @@
     "output": ["DP-1"],
     "layer": "top",
     "position": "bottom",
-    "spacing": 24,
-    "margin-bottom": 16,
+    "spacing": 16,
+    "margin-bottom": 12,
     "modules-left": [
         "bluetooth",
         "network",
@@ -271,7 +271,7 @@
     "output": ["DP-1"],
     "layer": "top",
     "position": "bottom",
-    "spacing": 24,
+    "spacing": 16,
     "margin-bottom": 16,
     "modules-left": [
         "custom/audio",
