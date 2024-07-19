@@ -1,5 +1,5 @@
 [{
-    "output": ["eDP-1"],
+    "output": ["eDP-2"],
     "layer": "top",
     "position": "top",
     "spacing": 16,
@@ -26,7 +26,7 @@
             "warning": 32,
             "critical": 16,
         },
-        "format": " {capacity}% {time} left, {power} W",
+        "format": " {capacity}%",
         "format-discharging": " {capacity}% Discharging",
         "format-charging": " {capacity}% Charging",
         "tooltip-format": "{time} left, {power} W",

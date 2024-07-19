@@ -10,7 +10,7 @@ border-width = 0
 outline-width = 0
 
 font = "Ubuntu Mono"
-font-size = 12
+font-size = 9
 text-color = #ffffff
 prompt-color = #ffffff
 selection-color = #3c64ee
@@ -23,7 +23,7 @@ result-spacing = 4
 
 hide-input = false
 
-output = eDP-1
+output = eDP-2
 exclusive-zone = -1
 
 width = 100%

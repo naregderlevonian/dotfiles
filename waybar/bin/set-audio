@@ -1,0 +1,22 @@
+#!/bin/sh
+
+play() {
+    paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga > /dev/null 2>&1
+}
+
+case "$1" in
+    increase)
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+ -l 1
+        play
+        ;;
+    decrease)
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
+        play
+        ;;
+    toggle)
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        play
+        notify-send "$(sh "$HOME/.config/waybar/bin/get-audio")"
+        ;;
+    *)
+esac
