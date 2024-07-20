@@ -151,8 +151,8 @@
     },
     "custom/optimus": {
         "format": "{} ",
-        "on-click": "$HOME/.config/waybar/bin/set-gpu-mode",
-        "on-click-right": "$HOME/.config/waybar/bin/set-gpu-mode",
+        "on-click": "kitty -e $HOME/.config/waybar/bin/set-gpu-mode",
+        "on-click-right": "kitty -e $HOME/.config/waybar/bin/set-gpu-mode",
         "tooltip": false,
         "exec": "cat ~/.config/waybar/etc/current-gpu-mode.conf",
         "interval": 1,

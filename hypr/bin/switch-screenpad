@@ -11,5 +11,5 @@ else
 fi
 
 echo "$MESSAGE" > $STORAGE
-sed -i '90,$ {/"output": \["DP-1"\]/ {s/DP-1/eDP-1/; b}; /"output": \["eDP-1"\]/ {s/eDP-1/DP-1/}}' $HOME/.config/waybar/config
+sed -i '90,$ {/"output": \["DP-1"\]/ {s/DP-1/eDP-2/; b}; /"output": \["eDP-1"\]/ {s/eDP-1/DP-1/}}' $HOME/.config/waybar/config
 notify-send "Screenpad $(if [ "$STATUS" == "false" ]; then echo "Off"; else echo "On"; fi)"
