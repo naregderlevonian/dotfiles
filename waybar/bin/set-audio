@@ -16,7 +16,6 @@ case "$1" in
     toggle)
         wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
         play
-        notify-send "$(sh "$HOME/.config/waybar/bin/get-audio")"
         ;;
     *)
 esac

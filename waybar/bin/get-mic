@@ -11,8 +11,6 @@ BUFFER_SIZE=$(echo "$INFORMATION" | grep -oP '(?<=api.alsa.period-size = ")[0-9]
 
 LATENCY=$(echo "scale=5; $BUFFER_SIZE / ${SAMPLE_RATE%Hz} * 1000" | bc)
 
-XRUNS=$(pw-top -b -n 1 | awk '{sum+=$9} END {print sum}')
-
 if [ -z "$INFORMATION" ]; then
     echo "No Sound "
     exit 0
@@ -26,6 +24,6 @@ fi
 if [ "$IS_MUTED" = "yes" ]; then
     echo "$DESCRIPTION Muted "
 else
-    echo "$XRUNS Xruns    $DESCRIPTION $VOLUME, ${SAMPLE_RATE%Hz}/$BUFFER_SIZE $(printf "%.2f" $LATENCY)ms "
+    echo "$DESCRIPTION $VOLUME, ${SAMPLE_RATE%Hz}/$BUFFER_SIZE $(printf "%.2f" $LATENCY)ms "
 fi
 

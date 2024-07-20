@@ -2,9 +2,9 @@
 SCREENSHOT_PATH="$HOME/Pictures/Screenshots/$(date +'%s.png')"
 
 if [ "$1" = "screen" ]; then
-    grim "$SCREENSHOT_PATH"
+    wayshot -f "$SCREENSHOT_PATH"
 else
-    grim -g "$(slurp -o)" "$SCREENSHOT_PATH"
+    wayshot -s "$(slurp)" -f "$SCREENSHOT_PATH"
 fi
 
 play "$HOME/.config/hypr/share/sounds/camera-shutter.ogg"
