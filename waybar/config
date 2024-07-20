@@ -272,7 +272,7 @@
     "layer": "top",
     "position": "bottom",
     "spacing": 16,
-    "margin-bottom": 16,
+    "margin-bottom": 12,
     "modules-left": [
         "custom/audio",
     ],
