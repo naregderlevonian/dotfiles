@@ -1,5 +1,5 @@
 [{
-    "output": ["eDP-1"],
+    "output": ["eDP-2"],
     "layer": "top",
     "position": "top",
     "spacing": 16,
@@ -101,8 +101,7 @@
     "modules-center": [
         "hyprland/workspaces"
     ],
-    "modules-right": [	
-        "custom/optimus",
+    "modules-right": [
         "custom/fan",
         "custom/turbo",
         "custom/frequency",
@@ -148,14 +147,6 @@
         "on-scroll-down": "hyprctl dispatch workspace r+1",
         "all-outputs": false,
         "smooth-scrolling-threshold": 3
-    },
-    "custom/optimus": {
-        "format": "{} ",
-        "on-click": "kitty -e $HOME/.config/waybar/bin/set-gpu-mode",
-        "on-click-right": "kitty -e $HOME/.config/waybar/bin/set-gpu-mode",
-        "tooltip": false,
-        "exec": "cat ~/.config/waybar/etc/current-gpu-mode.conf",
-        "interval": 1,
     },
     "custom/fan": {
         "format": "{}",
@@ -210,11 +201,12 @@
     ],
     "modules-center": [
     ],
-    "modules-right": [
-        "custom/gputemperature",
-        "temperature",
+    "modules-right": [	
         "cpu",		
+        "temperature",
         "memory",
+        "custom/gputemperature",
+        "custom/optimus",
     ],
     "bluetooth": {
         "format": " Bluetooth",
@@ -239,6 +231,14 @@
         "interval": 1,
         "tooltip": false,
     },
+    "custom/optimus": {
+        "format": "{} ",
+        "on-click": "kitty -e $HOME/.config/waybar/bin/set-gpu-mode",
+        "on-click-right": "kitty -e $HOME/.config/waybar/bin/set-gpu-mode",
+        "tooltip": false,
+        "exec": "cat ~/.config/waybar/etc/current-gpu-mode.conf",
+        "interval": 1,
+    },
     "custom/gputemperature": {
         "format": "GPU {}°C ",
         "interval": 1,  
@@ -250,7 +250,7 @@
         "interval": 1,  
     },
     "cpu": {
-        "format": "CPU {load}%, {usage}%, {avg_frequency:0.1f}GHz ",
+        "format": "CPU {usage}%, {avg_frequency:0.1f}GHz ",
         "states": {
             "warning": 64,
             "critical": 92

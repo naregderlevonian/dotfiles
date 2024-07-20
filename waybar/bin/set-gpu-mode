@@ -3,14 +3,47 @@
 GPU_MODE_CONFIG="$HOME/.config/waybar/etc/current-gpu-mode.conf"
 CURRENT_GPU_MODE=$(cat "$GPU_MODE_CONFIG")
 
+switch_config_files() {
+    if [ "$1" = "intel" ]; then
+        SED_OLD="eDP-2"
+        SED_NEW="eDP-1"
+        sudo sed -i "s/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/MODULES=()/" /etc/mkinitcpio.conf
+    else
+        SED_OLD="eDP-1"
+        SED_NEW="eDP-2"
+        echo "source = ~/.config/hypr/hyprland/nvidia.conf" >> "$HOME/.config/hypr/hyprland.conf"
+        sudo sed -i "s/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/" /etc/mkinitcpio.conf
+    fi
+    
+    CONFIG_FILES=(
+        "$HOME/.config/hypr/hyprland/monitors.conf"
+        "$HOME/.config/hypr/hyprland/input/stylus.conf"
+        "$HOME/.config/hypr/hyprland/input/touchscreen.conf"
+        "$HOME/.config/hypr/bin/switch-screenpad"
+        "$HOME/.config/waybar/config"
+        "$HOME/.config/tofi/config"
+    )
+
+    for FILE in "${CONFIG_FILES[@]}"; do
+        sed -i "s/$SED_OLD/$SED_NEW/" "$FILE"
+    done
+    
+    [ "$1" = "intel" ] && sed -i "\|source = ~/.config/hypr/hyprland/nvidia.conf|d" "$HOME/.config/hypr/hyprland.conf"
+    
+    sudo mkinitcpio -P
+}
+
+restart_now() {
+    systemctl reboot
+}
+
 switch_gpu() {
     if sudo intel-nvidia-switch --switch "$1"; then
         echo "$1" | sudo sed -e "s/\b\(.\)/\u\1/g" > "$GPU_MODE_CONFIG"
         notify-send "GPU Changed" "$1"
-        [ "$1" = "intel" ] && sed -i "\|source = ~/.config/hypr/hyprland/nvidia.conf|d" "$HOME/.config/hypr/hyprland.conf"
-        sudo mkinitcpio -P
+        switch_config_files "$1"
         restart_now
-        systemctl reboot
+        return 0
     else
         notify-send "GPU Switch Error"
         return 1
