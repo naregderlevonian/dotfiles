@@ -24,6 +24,6 @@ fi
 if [ "$IS_MUTED" = "yes" ]; then
     echo " $DESCRIPTION Muted"
 else
-    echo " $DESCRIPTION $VOLUME, $BUFFER_SIZE/${SAMPLE_RATE%Hz} $(printf "%.2f" $LATENCY)ms"
+    echo " $DESCRIPTION $VOLUME, ${SAMPLE_RATE%Hz}Hz $BUFFER_SIZE $(printf "%.2f" $LATENCY)ms" | tr -s " "
 fi
 

@@ -1,15 +1,60 @@
 #!/bin/sh
 
 MODE=~/.config/hypr/hyprland/mode.conf
+HYPERPAPER_CONFIG=~/.config/hypr/hyprpaper.conf
 
-if [ -s $MODE ]; then
-    notify-send "Theme Off"
-    > $MODE
-    pkill hyprpaper
-    hyprctl reload
+THEMES=(
+    Default
+    Night
+)
+
+# Function to get the current theme
+get_current_theme() {
+    if [ -s "$MODE" ]; then
+        basename $(grep -oP '(?<=modes/).*(?=\.conf)' "$MODE")
+    else
+        echo "Default"
+    fi
+}
+
+# Function to toggle themes
+toggle_theme() {
+    current_theme=$(get_current_theme)
+    for i in "${!THEMES[@]}"; do
+        if [ "${THEMES[$i]}" = "$current_theme" ]; then
+            next_index=$(( (i + 1) % ${#THEMES[@]} ))
+            new_theme=${THEMES[$next_index]}
+            break
+        fi
+    done
+
+    if [ "$new_theme" = "Default" ]; then
+        > $MODE
+        pkill hyprpaper
+    else
+        echo "source = ~/.config/hypr/hyprland/modes/$new_theme.conf" > $MODE
+    fi
+
+    notify-send "Theme switched to $new_theme"
+
+    # Update hyprpaper config
+    sed -i "s/Screen-.*\.png/Screen-$new_theme.png/g" $HYPERPAPER_CONFIG
+    sed -i "s/Screenpad-.*\.png/Screenpad-$new_theme.png/g" $HYPERPAPER_CONFIG
+}
+
+if [ -s "$MODE" ]; then
+    current_theme=$(get_current_theme)
+    if [ "$current_theme" != "Default" ]; then
+        toggle_theme
+    else
+        notify-send "Theme Off"
+        > $MODE
+    fi
 else
-    notify-send "Theme On"
-    echo "source = ~/.config/hypr/hyprland/modes/custom.conf" > $MODE
-    hyprpaper
-    hyprctl reload
+    toggle_theme
 fi
+
+pkill hyprpaper
+hyprctl reload
+hyprpaper
+
