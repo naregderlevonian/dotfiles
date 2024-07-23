@@ -1,15 +1,35 @@
 #!/bin/sh
 
+GPU_MODE_CONFIG="$HOME/.config/waybar/etc/current-gpu-mode.conf"
+CURRENT_GPU_MODE=$(cat "$GPU_MODE_CONFIG")
+
 STATUS=$(echo "$(hyprctl -j monitors)" | jq '.[] | select(.name == "DP-1").disabled')
-STORAGE=$HOME/.config/hypr/etc/screenpad.conf
+STORAGE="$HOME/.config/hypr/etc/screenpad.conf"
+
+MONITOR=
+if [ "$CURRENT_GPU_MODE" = "Hybrid" ]; then
+    MONITOR="eDP-2"
+else
+    MONITOR="eDP-2"
+fi
 
 if [ "$STATUS" == "false" ]; then
     MESSAGE="monitor = DP-1, disable"
-    pkill waybar
 else
-    MESSAGE="monitor = DP-1, 2880x864@120, 0x1200, 1.5, bitdepth, 10"
+    MESSAGE="monitor = DP-1, 2880x864@120, 0x900, 2, bitdepth, 10"
 fi
 
 echo "$MESSAGE" > $STORAGE
-sed -i '90,$ {/"output": \["DP-1"\]/ {s/DP-1/eDP-2/; b}; /"output": \["eDP-2"\]/ {s/eDP-2/DP-1/}}' $HOME/.config/waybar/config
+
+sed -i "90,\$ {
+    /\"output\": \[\"DP-1\"\]/ {
+        s/DP-1/$MONITOR/
+        b
+    }
+        /\"output\": \[\"$MONITOR\"\]/ {
+        s/$MONITOR/DP-1/
+    }
+}" "$HOME/.config/waybar/config"
+
 notify-send "Screenpad $(if [ "$STATUS" == "false" ]; then echo "Off"; else echo "On"; fi)"
+pkill waybar
