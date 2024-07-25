@@ -26,7 +26,7 @@ sed -i "90,\$ {
         s/DP-1/$MONITOR/
         b
     }
-        /\"output\": \[\"$MONITOR\"\]/ {
+    /\"output\": \[\"$MONITOR\"\]/ {
         s/$MONITOR/DP-1/
     }
 }" "$HOME/.config/waybar/config"

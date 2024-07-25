@@ -16,6 +16,7 @@ switch_config_files() {
     fi
     
     CONFIG_FILES=(
+        "$HOME/.config/hypr/hyprlock.conf"
         "$HOME/.config/hypr/hyprland/monitors.conf"
         "$HOME/.config/hypr/hyprland/input/stylus.conf"
         "$HOME/.config/hypr/hyprland/input/touchscreen.conf"
