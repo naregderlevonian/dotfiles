@@ -6,10 +6,18 @@ play() {
 
 case "$1" in
     increase)
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1
+        play
+        ;;
+   up)
         wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+ -l 1
         play
         ;;
     decrease)
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+        play
+        ;;
+    down)
         wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
         play
         ;;

@@ -35,11 +35,11 @@ toggle_theme() {
         echo "source = ~/.config/hypr/hyprland/modes/$new_theme.conf" > $MODE
     fi
 
-    notify-send "Theme switched to $new_theme"
+    notify-send "Theme: $new_theme"
 
     # Update hyprpaper config
-    sed -i "s/Screen-.*\.png/Screen-$new_theme.png/g" $HYPERPAPER_CONFIG
-    sed -i "s/Screenpad-.*\.png/Screenpad-$new_theme.png/g" $HYPERPAPER_CONFIG
+    sed -i "s/$current_theme/$new_theme/g" $HYPERPAPER_CONFIG
+    sed -i "s/$current_theme/$new_theme/g" $HYPERPAPER_CONFIG
 }
 
 if [ -s "$MODE" ]; then
