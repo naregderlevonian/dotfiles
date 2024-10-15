@@ -31,14 +31,14 @@ tooltip label {
 #custom-audio,
 #custom-backlight1,
 #bluetooth {
-    margin-left: 16px;
+    margin-left: 8px;
 }
 
 #custom-poweroff,
 #custom-mic,
 #custom-optimus,
 #custom-governor {
-    margin-right: 16px;
+    margin-right: 8px;
 }
 
 #custom-energy {

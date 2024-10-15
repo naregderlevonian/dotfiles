@@ -3,7 +3,8 @@
     "layer": "top",
     "position": "top",
     "spacing": 16,
-    "margin-top": 12,
+    "margin-top": 8,
+    "margin-bottom": 4,
     "modules-left": [
         "battery",
         "clock",
@@ -92,7 +93,7 @@
     "layer": "top",
     "position": "bottom",
     "spacing": 16,
-    "margin-bottom": 12,
+    "margin-bottom": 8,
     "modules-left": [
         "custom/backlight1",
         "custom/backlight2",
@@ -194,7 +195,7 @@
     "layer": "top",
     "position": "bottom",
     "spacing": 16,
-    "margin-bottom": 12,
+    "margin-bottom": 8,
     "modules-left": [
         "bluetooth",
         "network",
@@ -272,7 +273,8 @@
     "layer": "top",
     "position": "bottom",
     "spacing": 16,
-    "margin-bottom": 12,
+    "margin-top": 4,
+    "margin-bottom": 8,
     "modules-left": [
         "custom/audio",
     ],
