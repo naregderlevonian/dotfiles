@@ -1,60 +1,91 @@
 #!/bin/sh
 
-MODE=~/.config/hypr/hyprland/mode.conf
-HYPERPAPER_CONFIG=~/.config/hypr/hyprpaper.conf
+CONFIG_PATH=~/.config
+MODE_PATH=$CONFIG_PATH/hypr/hyprland/mode.conf
+HYPERPAPER_SETTINGS=$CONFIG_PATH/hypr/hyprpaper.conf
+MODES_PATH=$CONFIG_PATH/hypr/hyprland/modes
 
 THEMES=(
     Default
     Night
+    Catppuccin
 )
 
 # Function to get the current theme
 get_current_theme() {
-    if [ -s "$MODE" ]; then
-        basename $(grep -oP '(?<=modes/).*(?=\.conf)' "$MODE")
+    [ -s "$MODE_PATH" ] && basename "$(grep -oP '(?<=modes/).*(?=\.conf)' "$MODE_PATH")" || echo "Default"
+}
+
+change_files() {
+    OLD_THEME=$1
+    NEW_THEME=$2
+
+    # Update hyprpaper config
+    sed -i "s/$OLD_THEME/$NEW_THEME/g" $HYPERPAPER_SETTINGS
+
+    # Waybar
+    echo "$NEW_THEME" > $CONFIG_PATH/waybar/etc/current-theme.conf
+
+    # Applications
+    cp "$CONFIG_PATH/kitty/kitty-$NEW_THEME.conf" "$CONFIG_PATH/kitty/kitty.conf"
+
+    # GTK
+    rm -rf "$CONFIG_PATH"/gtk-{3,4}*
+    cp -r "$MODES_PATH/$NEW_THEME/gtk"* "$CONFIG_PATH"
+    
+    if [ "$NEW_THEME" = "Catppuccin" ]; then
+        gsettings set org.gnome.desktop.interface gtk-theme "catppuccin-macchiato"
+        sed -i 's/^skin=.*/skin=catppuccin/' $CONFIG_PATH/mc/ini
     else
-        echo "Default"
+        gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
+        sed -i 's/^skin=.*/skin=/' $CONFIG_PATH/mc/ini
+    fi
+}
+
+# Function to handle theme changes
+handle_theme_change() {
+    CURRENT_THEME=$1
+    NEW_THEME=$2
+    RESTART=false
+
+    if [ "$NEW_THEME" = "Catppuccin" || "$CURRENT_THEME" = "Catppuccin" ]; then
+        if zenity --question --text="Are you sure you want to restart the window manager?"; then
+            RESTART=true
+        else
+            return
+        fi
+    else
+
+    # Update theme in mode file
+    if [ "$NEW_THEME" = "Default" ]; then
+        > "$MODE_PATH"
+    else
+        echo "source = $CONFIG_PATH/hypr/hyprland/modes/$NEW_THEME.conf" > "$MODE_PATH"
+    fi
+
+    # Update files
+    change_files "$CURRENT_THEME" "$NEW_THEME"
+
+    # Notify user
+    notify-send "Theme: $NEW_THEME"
+    
+    if [ $RESTART ]; then
+        hyprctl dispatch exit
     fi
 }
 
 # Function to toggle themes
-toggle_theme() {
-    current_theme=$(get_current_theme)
-    for i in "${!THEMES[@]}"; do
-        if [ "${THEMES[$i]}" = "$current_theme" ]; then
-            next_index=$(( (i + 1) % ${#THEMES[@]} ))
-            new_theme=${THEMES[$next_index]}
-            break
-        fi
-    done
+switch_theme() {
+    CURRENT_THEME=$(get_current_theme)
+    NEXT_INDEX=$(( ( $(printf "%s\n" "${THEMES[@]}" | grep -nx "$CURRENT_THEME" | cut -d':' -f1) % ${#THEMES[@]} ) ))
+    NEW_THEME=${THEMES[$NEXT_INDEX]}
 
-    if [ "$new_theme" = "Default" ]; then
-        > $MODE
-        pkill hyprpaper
-    else
-        echo "source = ~/.config/hypr/hyprland/modes/$new_theme.conf" > $MODE
-    fi
-
-    notify-send "Theme: $new_theme"
-
-    # Update hyprpaper config
-    sed -i "s/$current_theme/$new_theme/g" $HYPERPAPER_CONFIG
-    sed -i "s/$current_theme/$new_theme/g" $HYPERPAPER_CONFIG
+    handle_theme_change "$CURRENT_THEME" "$NEW_THEME"
 }
 
-if [ -s "$MODE" ]; then
-    current_theme=$(get_current_theme)
-    if [ "$current_theme" != "Default" ]; then
-        toggle_theme
-    else
-        notify-send "Theme Off"
-        > $MODE
-    fi
-else
-    toggle_theme
-fi
+# Main
+switch_theme
 
 pkill hyprpaper
 hyprctl reload
 hyprpaper
-

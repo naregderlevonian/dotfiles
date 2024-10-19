@@ -14,6 +14,7 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/theme",
         "custom/hypridle",
         "custom/lock",
         "custom/sleep",
@@ -54,6 +55,12 @@
         "on-scroll-down": "hyprctl dispatch workspace r+1",
         "all-outputs": false,
         "smooth-scrolling-threshold": 3,
+    },
+    "custom/theme": {
+        "format": "{}",
+        "exec": "cat $HOME/.config/waybar/etc/current-theme.conf",
+        "on-click": "$HOME/.config/hypr/bin/switch-theme",
+        "interval": 1,
     },
     "custom/hypridle": {
         "format": "{}",
