@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -15,7 +15,21 @@ eval $(dircolors ~/.dir_colors)
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-PROMPT='%{$FG[015]%}%n %{$FG[012]%}%1~%{$FG[015]%} $ %{$reset_color%}'
+
+# PROMPT='%{$FG[015]%}%n %{$FG[012]%}%1~%{$FG[015]%} # %{$reset_color%}'
+
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+
+PROMPT='
+%{$FG[015]%}┌──%{$BG[015]%}%{$fg[black]%} %n %{$reset_color%}%{$reset_color%} %{$FG[014]%}${vcs_info_msg_0_}%{$reset_color%}
+%{$FG[015]%}┴  %{$FG[012]%} %~ %{$reset_color%}
+%{$FG[015]%}┬   %{$FG[008]%}%D{%d %B, %Y %H:%M:%S} %{$reset_color%}
+%{$FG[015]%}└── %{$reset_color%}'
+
+zstyle ':vcs_info:git:*' formats 'git:%b'
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -185,9 +199,10 @@ if [ $TERM != "linux" ]; then
 fi
 
 if [ $(tty) = /dev/tty1 ]; then
-    # dbus-launch --sh-syntax --exit-with-session Hyprland > /dev/null
-    timeout 1s cmatrix -a -r
-    Hyprland > /dev/null
+    # timeout 2s cmatrix -a -r
+    # Hyprland > /dev/null
+    dbus-launch --sh-syntax --exit-with-session Hyprland > /dev/null
     logout
 fi
 
+ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }

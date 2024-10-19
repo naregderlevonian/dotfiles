@@ -7,12 +7,12 @@ switch_config_files() {
     if [ "$1" = "intel" ]; then
         SED_OLD="eDP-2"
         SED_NEW="eDP-1"
-        sudo sed -i "s/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/MODULES=()/" /etc/mkinitcpio.conf
+        # sudo sed -i "s/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/MODULES=()/" /etc/mkinitcpio.conf
     else
         SED_OLD="eDP-1"
         SED_NEW="eDP-2"
         echo "source = ~/.config/hypr/hyprland/nvidia.conf" >> "$HOME/.config/hypr/hyprland.conf"
-        sudo sed -i "s/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/" /etc/mkinitcpio.conf
+        # sudo sed -i "s/MODULES=()/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/" /etc/mkinitcpio.conf
     fi
     
     CONFIG_FILES=(
