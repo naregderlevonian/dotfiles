@@ -46,15 +46,15 @@ change_files() {
 handle_theme_change() {
     CURRENT_THEME=$1
     NEW_THEME=$2
-    RESTART=false
+    RESTART="false"
 
-    if [ "$NEW_THEME" = "Catppuccin" || "$CURRENT_THEME" = "Catppuccin" ]; then
+    if [ "$NEW_THEME" = "Catppuccin" -o "$CURRENT_THEME" = "Catppuccin" ]; then
         if zenity --question --text="Are you sure you want to restart the window manager?"; then
-            RESTART=true
+            RESTART="true"
         else
             return
         fi
-    else
+    fi
 
     # Update theme in mode file
     if [ "$NEW_THEME" = "Default" ]; then
@@ -69,7 +69,8 @@ handle_theme_change() {
     # Notify user
     notify-send "Theme: $NEW_THEME"
     
-    if [ $RESTART ]; then
+    if [ "$RESTART" = "true" ]; then
+        sleep 1
         hyprctl dispatch exit
     fi
 }
