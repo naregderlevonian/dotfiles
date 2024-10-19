@@ -25,8 +25,8 @@
     "battery": {
         "interval": 1,
         "states": {
-            "warning": 32,
-            "critical": 16,
+            "warning": 20,
+            "critical": 10,
         },
         "format": " {capacity}%",
         "format-discharging": " {capacity}% Discharging",
