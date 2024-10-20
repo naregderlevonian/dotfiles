@@ -38,7 +38,7 @@ change_files() {
         sed -i 's/^skin=.*/skin=catppuccin/' $CONFIG_PATH/mc/ini
     else
         gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
-        sed -i 's/^skin=.*/skin=/' $CONFIG_PATH/mc/ini
+        sed -i 's/^skin=.*/skin=mc/' $CONFIG_PATH/mc/ini
     fi
 }
 
